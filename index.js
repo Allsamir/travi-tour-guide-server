@@ -4,6 +4,7 @@ dotenv.config();
 import cors from "cors";
 import mongoose from "mongoose";
 const app = express();
+import appRouter from "./routes/index.js";
 const PORT = process.env.PORT || 3000;
 app.use(
   cors({
@@ -12,6 +13,7 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use("/api", appRouter);
 app.get("/", (req, res) => {
   res.send("Hello From Assignment-12 Server");
 });
