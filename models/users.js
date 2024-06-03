@@ -13,7 +13,14 @@ const userSchema = mongoose.Schema({
   education: String,
   skills: [String],
   work_experience: String,
+  rating: Number,
+  comments: [
+    {
+      name: String,
+      comment: String,
+    },
+  ],
 });
 
-const User = mongoose.model("User", userSchema);
+const User = new mongoose.model("User", userSchema);
 export default User;
