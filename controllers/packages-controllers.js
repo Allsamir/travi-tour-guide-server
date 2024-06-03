@@ -18,3 +18,12 @@ export const singlePackage = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getAllThePackes = async (req, res) => {
+  try {
+    const packages = await Package.find({});
+    res.status(200).send(packages);
+  } catch (error) {
+    console.error(error);
+  }
+};

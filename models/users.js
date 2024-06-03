@@ -1,4 +1,9 @@
 import mongoose from "mongoose";
+const commentSchema = new mongoose.Schema({
+  name: String,
+  comment: String,
+  rating: Number,
+});
 const userSchema = mongoose.Schema({
   email: {
     type: String,
@@ -14,12 +19,7 @@ const userSchema = mongoose.Schema({
   skills: [String],
   work_experience: String,
   rating: Number,
-  comments: [
-    {
-      name: String,
-      comment: String,
-    },
-  ],
+  comments: [commentSchema],
 });
 
 const User = new mongoose.model("User", userSchema);
