@@ -36,11 +36,20 @@ export const createAUser = async (req, res) => {
 export const getUserBasedOnRole = async (req, res) => {
   // public api for getting the role based users
   try {
-    const { role } = req.query;
-    const guides = await User.find({ role: role });
+    const { role, id } = req.query;
+    const query = { role: role };
+    if (id) {
+      query._id = id;
+    }
+    const guides = await User.find(query);
+    if (guides.length === 1) {
+      const [guide] = guides;
+      return res.status(200).send(guide);
+    }
     res.status(200).send(guides);
   } catch (error) {
     console.error(error);
+    res.status(500).send({ error: "An error occurred" });
   }
 };
 
