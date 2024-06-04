@@ -21,6 +21,16 @@ export const getSingleUser = async (req, res) => {
   }
 };
 
+export const getTheRoleOfTheUser = async (req, res) => {
+  try {
+    const { email } = req.query;
+    const role = await User.findOne({ email: email }, "_id role");
+    res.status(200).send(role);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createAUser = async (req, res) => {
   // public api for creating users
   try {
