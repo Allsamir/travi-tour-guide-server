@@ -10,3 +10,13 @@ export const getAllTheStories = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getSingleStory = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const story = await Story.findById({ _id: id });
+    res.status(200).send(story);
+  } catch (error) {
+    console.error(error);
+  }
+};
