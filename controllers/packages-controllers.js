@@ -27,3 +27,13 @@ export const getAllThePackes = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getPackagesBasedOnType = async (req, res) => {
+  try {
+    const { type } = req.query;
+    const packages = await Package.find({ tourType: type });
+    res.status(200).send(packages);
+  } catch (error) {
+    console.error(error);
+  }
+};
