@@ -14,8 +14,8 @@ import verifyAdmin from "../middlewares/verifyAdmin.js";
 
 const userRoutes = Router();
 
-userRoutes.get("/", verifyToken, verifyAdmin, getAllTheUsers); // not in use now
-userRoutes.get("/user", verifyToken, getSingleUser); // not in use now
+userRoutes.get("/", verifyToken, verifyAdmin, getAllTheUsers);
+userRoutes.get("/user", verifyToken, verifyAdmin, getSingleUser);
 userRoutes.post("/", createAUser);
 userRoutes.post("/jwt", tokenGeneration);
 userRoutes.post("/clearCookie", clearToken);

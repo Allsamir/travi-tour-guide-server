@@ -79,7 +79,6 @@ export const updateComments = async (req, res) => {
   try {
     const { id } = req.query;
     const { name, comment, rating } = req.body;
-    console.log(req.body);
     const updateUser = await User.findByIdAndUpdate(
       { _id: id },
       {
