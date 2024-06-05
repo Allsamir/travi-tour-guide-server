@@ -47,6 +47,11 @@ export const getUserBasedOnRole = async (req, res) => {
   // public api for getting the role based users
   try {
     const { role, id } = req.query;
+    if (role === "admin") {
+      return res.status(403).send({ message: "Access Forbidden" });
+    } else if (role === "user") {
+      return res.status(403).send({ message: "Access Forbidden" });
+    }
     const query = { role: role };
     if (id) {
       query._id = id;
