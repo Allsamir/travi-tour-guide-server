@@ -1,20 +1,25 @@
 import { Router } from "express";
 import {
   createAUser,
-  getUserBasedOnRole,
+  getGuideInformation,
   getAllTheUsers,
   getSingleUser,
   updateComments,
   getTheRoleOfTheUser,
+  tokenGeneration,
+  clearToken,
 } from "../controllers/users-controllers.js";
+import verifyToken from "../middlewares/verifyToken.js";
 
 const userRoutes = Router();
 
-userRoutes.get("/", getAllTheUsers); // not in use now
-userRoutes.get("/user", getSingleUser); // not in use now
+userRoutes.get("/", verifyToken, getAllTheUsers); // not in use now
+userRoutes.get("/user", verifyToken, getSingleUser); // not in use now
 userRoutes.post("/", createAUser);
-userRoutes.get("/role", getUserBasedOnRole);
-userRoutes.get("/roleOfUser", getTheRoleOfTheUser);
-userRoutes.patch("/updateComments", updateComments);
+userRoutes.post("/jwt", tokenGeneration);
+userRoutes.post("/clearCookie", clearToken);
+userRoutes.get("/role", getGuideInformation);
+userRoutes.get("/roleOfUser", verifyToken, getTheRoleOfTheUser);
+userRoutes.patch("/updateComments", verifyToken, updateComments);
 
 export default userRoutes;
