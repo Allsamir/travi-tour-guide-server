@@ -10,10 +10,11 @@ import {
   clearToken,
 } from "../controllers/users-controllers.js";
 import verifyToken from "../middlewares/verifyToken.js";
+import verifyAdmin from "../middlewares/verifyAdmin.js";
 
 const userRoutes = Router();
 
-userRoutes.get("/", verifyToken, getAllTheUsers); // not in use now
+userRoutes.get("/", verifyToken, verifyAdmin, getAllTheUsers); // not in use now
 userRoutes.get("/user", verifyToken, getSingleUser); // not in use now
 userRoutes.post("/", createAUser);
 userRoutes.post("/jwt", tokenGeneration);
