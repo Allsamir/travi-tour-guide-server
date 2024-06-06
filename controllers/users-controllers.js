@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/users.js";
 import jwt from "jsonwebtoken";
+import verifyUser from "../middlewares/verifyUser.js";
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -18,8 +19,9 @@ export const getAllTheUsers = async (req, res) => {
 
 export const getSingleUser = async (req, res) => {
   try {
-    const { id } = req.query;
-    const user = await User.findById({ _id: id });
+    const { email } = req.query;
+    verifyUser(req.user.email, email);
+    const user = await User.findOne({ email: email });
     res.status(200).send(user);
   } catch (error) {
     console.error(error);
@@ -30,6 +32,7 @@ export const getTheRoleOfTheUser = async (req, res) => {
   // secure api
   try {
     const { email } = req.query;
+    verifyUser(req.user.email, email);
     const role = await User.findOne({ email: email }, "_id role");
     res.status(200).send(role);
   } catch (error) {
