@@ -20,3 +20,15 @@ export const getSingleStory = async (req, res) => {
     console.error(error);
   }
 };
+
+export const createAStory = async (req, res) => {
+  try {
+    const newStory = new Story(req.body);
+    await newStory.save().then(() => console.log("Story saved"));
+    res
+      .status(201)
+      .send({ success: true, message: "Thank you for sharing your story" });
+  } catch (error) {
+    console.error(error);
+  }
+};
