@@ -19,7 +19,6 @@ export const getUsersBookigs = async (req, res) => {
         $unwind: "$packageDetails",
       },
     ]);
-    console.log(bookings);
     res.status(200).send(bookings);
   } catch (error) {
     console.error(error);
@@ -45,6 +44,19 @@ export const createNewBookings = async (req, res) => {
     res
       .status(201)
       .send({ success: true, message: "Successfully Booking Done" });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteBooking = async (req, res) => {
+  try {
+    const { id, email } = req.query;
+    verifyUser(req.user.email, email);
+    const deleteBooking = await Bookings.findByIdAndDelete({ _id: id });
+    if (deleteBooking) {
+      res.status(200).send({ success: true, message: "Your Booking Canceled" });
+    }
   } catch (error) {
     console.error(error);
   }
