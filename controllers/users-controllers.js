@@ -28,6 +28,42 @@ export const getSingleUser = async (req, res) => {
   }
 };
 
+export const getGuideProfile = async (req, res) => {
+  try {
+    const { email } = req.query;
+    const guideProfile = await User.findOne({ email: email });
+    res.status(200).send(guideProfile);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateGuideProfile = async (req, res) => {
+  try {
+    const { name, profilePicture, skills } = req.body;
+    const { id } = req.query;
+    let update = {};
+    if (name) update.name = name;
+    if (profilePicture) update.profilePicture = profilePicture;
+    if (skills) update.skills = skills;
+    if (Object.keys(update).length === 0) {
+      return res
+        .status(400)
+        .send({ success: false, message: "No fields to update" });
+    }
+    const updateProfile = await User.findByIdAndUpdate(id, update, {
+      new: true,
+    });
+    if (updateProfile) {
+      res.status(200).send({ success: true, message: "Your Profile Updated" });
+    } else {
+      res.status(404).send({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const updateRequest = async (req, res) => {
   try {
     const { id, email } = req.query;
@@ -100,7 +136,6 @@ export const getGuideInformation = async (req, res) => {
 };
 
 export const updateComments = async (req, res) => {
-  // secure api
   try {
     const { id } = req.query;
     const { name, comment, rating } = req.body;
@@ -129,7 +164,7 @@ export const updateComments = async (req, res) => {
     console.error(error);
   }
 };
-
+/// Token generation
 export const tokenGeneration = async (req, res) => {
   try {
     const { email } = req.body;
