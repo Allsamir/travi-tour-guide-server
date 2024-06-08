@@ -30,3 +30,13 @@ export const getPackagesBasedOnType = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getWishList = async (req, res) => {
+  try {
+    const { wishList } = req.body;
+    const getWishListPackages = await Package.find({ _id: { $in: wishList } });
+    res.status(200).send(getWishListPackages);
+  } catch (error) {
+    console.error(error);
+  }
+};
