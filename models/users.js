@@ -19,6 +19,7 @@ const userSchema = mongoose.Schema({
   skills: [String],
   work_experience: String,
   rating: Number,
+  requested: Boolean,
   comments: [commentSchema],
 });
 

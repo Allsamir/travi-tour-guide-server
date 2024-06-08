@@ -28,6 +28,28 @@ export const getSingleUser = async (req, res) => {
   }
 };
 
+export const updateRequest = async (req, res) => {
+  try {
+    const { id, email } = req.query;
+    verifyUser(req.user.email, email);
+    const updateRequest = await User.findByIdAndUpdate(
+      { _id: id },
+      {
+        requested: true,
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (updateRequest) {
+      res.status(200).send({ success: true, message: "Your Request has sent" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getTheRoleOfTheUser = async (req, res) => {
   // secure api
   try {
