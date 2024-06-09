@@ -61,3 +61,47 @@ export const deleteBooking = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getGuideAssignedTourists = async (req, res) => {
+  try {
+    const { name } = req.query;
+    const assignedTourists = await Bookings.aggregate([
+      { $match: { guide: name } },
+      {
+        $lookup: {
+          from: "packages",
+          localField: "packageID",
+          foreignField: "_id",
+          as: "packageDetails",
+        },
+      },
+      {
+        $unwind: "$packageDetails",
+      },
+    ]);
+    res.status(200).send(assignedTourists);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const handleStatus = async (req, res) => {
+  try {
+    const { status, id } = req.query;
+    let update = {};
+    if (status === "Accept") {
+      update.status = "Accepted";
+    } else {
+      update.status = "Rejected";
+    }
+    const updateBookingStatus = await Bookings.findByIdAndUpdate(
+      { _id: id },
+      update,
+      { new: true },
+    );
+    if (updateBookingStatus)
+      res.status(200).send({ success: true, message: `${update.status}` });
+  } catch (error) {
+    console.error(error);
+  }
+};

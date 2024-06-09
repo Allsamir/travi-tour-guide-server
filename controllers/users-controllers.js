@@ -40,10 +40,9 @@ export const getGuideProfile = async (req, res) => {
 
 export const updateGuideProfile = async (req, res) => {
   try {
-    const { name, profilePicture, skills } = req.body;
+    const { profilePicture, skills } = req.body;
     const { id } = req.query;
     let update = {};
-    if (name) update.name = name;
     if (profilePicture) update.profilePicture = profilePicture;
     if (skills) update.skills = skills;
     if (Object.keys(update).length === 0) {
