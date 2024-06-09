@@ -8,6 +8,7 @@ const bookingsSchema = mongoose.Schema({
   price: Number,
   date: Date,
   status: String,
+  paid: Boolean,
   packageID: mongoose.Types.ObjectId,
 });
 

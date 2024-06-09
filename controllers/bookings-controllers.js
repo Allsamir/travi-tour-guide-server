@@ -115,3 +115,21 @@ export const handleStatus = async (req, res) => {
     console.error(error);
   }
 };
+
+export const updatePaid = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const updatePaid = await Bookings.findByIdAndUpdate(
+      { _id: id },
+      {
+        paid: true,
+      },
+      {
+        new: true,
+      },
+    );
+    if (updatePaid) res.status(200).send({ success: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
