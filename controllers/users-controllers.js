@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
+import { configDotenv } from "dotenv";
+configDotenv();
 import User from "../models/users.js";
 import jwt from "jsonwebtoken";
 import verifyUser from "../middlewares/verifyUser.js";
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -185,6 +189,25 @@ export const clearToken = async (req, res) => {
     res
       .clearCookie("token", { ...cookieOptions, maxAge: 0 })
       .send({ success: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createPaymentIntent = async (req, res) => {
+  try {
+    const { price } = req.body;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: price,
+      currency: "usd",
+      // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
   } catch (error) {
     console.error(error);
   }

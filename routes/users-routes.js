@@ -11,6 +11,7 @@ import {
   updateRequest,
   getGuideProfile,
   updateGuideProfile,
+  createPaymentIntent,
 } from "../controllers/users-controllers.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
@@ -26,6 +27,7 @@ userRoutes.get("/guide", verifyToken, verifyGuide, getGuideProfile);
 userRoutes.post("/", createAUser);
 userRoutes.post("/jwt", tokenGeneration);
 userRoutes.post("/clearCookie", clearToken);
+userRoutes.post("/createPaymentIntent", verifyToken, createPaymentIntent);
 userRoutes.patch("/updateComments", verifyToken, updateComments);
 userRoutes.patch("/request", verifyToken, updateRequest);
 userRoutes.patch(

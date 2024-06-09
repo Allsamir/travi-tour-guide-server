@@ -25,6 +25,16 @@ export const getUsersBookigs = async (req, res) => {
   }
 };
 
+export const getSingleBooking = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const booking = await Bookings.findById({ _id: id }, "price");
+    res.status(200).send(booking);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createNewBookings = async (req, res) => {
   try {
     const { email, name, photoURL, price, date, guide, status, packageID } =
