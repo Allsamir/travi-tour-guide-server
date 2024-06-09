@@ -31,6 +31,18 @@ export const getPackagesBasedOnType = async (req, res) => {
   }
 };
 
+export const createAPackage = async (req, res) => {
+  try {
+    const newPackage = new Package(req.body);
+    await newPackage.save().then(() => console.log("Package Created"));
+    res
+      .status(200)
+      .send({ success: true, message: "Package created successfully" });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getWishList = async (req, res) => {
   try {
     const { wishList } = req.body;
