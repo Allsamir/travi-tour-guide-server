@@ -17,6 +17,7 @@ export const getAllTheUsers = async (req, res) => {
     const { searchIndex, role } = req.query;
     const users = await User.find({
       name: { $regex: searchIndex, $options: "i" },
+      role: { $regex: role, $options: "i" },
     });
     res.status(200).send(users);
   } catch (error) {
