@@ -12,10 +12,12 @@ export const singlePackage = async (req, res) => {
 
 export const getAllThePackes = async (req, res) => {
   try {
-    const { count } = req.query;
-    const countInInt = parseInt(count);
-    const packages = await Package.find({}).limit(countInInt);
-    res.status(200).send(packages);
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skip = (page - 1) * limit;
+    const packages = await Package.find({}).skip(skip).limit(limit);
+    const totalPackages = await Package.countDocuments();
+    res.status(200).json({ packages, hasMore: skip + limit < totalPackages });
   } catch (error) {
     console.error(error);
   }
