@@ -14,7 +14,10 @@ const cookieOptions = {
 export const getAllTheUsers = async (req, res) => {
   // for admin only
   try {
-    const users = await User.find();
+    const { searchIndex, role } = req.query;
+    const users = await User.find({
+      name: { $regex: searchIndex, $options: "i" },
+    });
     res.status(200).send(users);
   } catch (error) {
     console.error(error);
