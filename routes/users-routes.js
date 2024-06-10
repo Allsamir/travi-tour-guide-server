@@ -12,6 +12,7 @@ import {
   getGuideProfile,
   updateGuideProfile,
   createPaymentIntent,
+  changeRole,
 } from "../controllers/users-controllers.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
@@ -19,7 +20,7 @@ import verifyGuide from "../middlewares/verifyGuide.js";
 
 const userRoutes = Router();
 
-userRoutes.get("/", verifyToken, verifyAdmin, getAllTheUsers); // not in use yet
+userRoutes.get("/", verifyToken, verifyAdmin, getAllTheUsers);
 userRoutes.get("/user", verifyToken, getSingleUser);
 userRoutes.get("/roleOfUser", verifyToken, getTheRoleOfTheUser);
 userRoutes.get("/role", getGuideInformation);
@@ -36,5 +37,6 @@ userRoutes.patch(
   verifyGuide,
   updateGuideProfile,
 );
+userRoutes.patch("/changeRole", verifyToken, verifyAdmin, changeRole);
 
 export default userRoutes;

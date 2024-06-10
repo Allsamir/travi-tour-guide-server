@@ -212,3 +212,24 @@ export const createPaymentIntent = async (req, res) => {
     console.error(error);
   }
 };
+
+export const changeRole = async (req, res) => {
+  try {
+    const { id, role } = req.query;
+    const updateRole = await User.findByIdAndUpdate(
+      { _id: id },
+      {
+        role: role,
+        changedRole: true,
+      },
+      { new: true },
+    );
+    if (updateRole)
+      res.status(200).send({
+        success: true,
+        message: `Role of the user Updated to ${role}`,
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
