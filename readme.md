@@ -8,9 +8,6 @@ Visit our live site at [Travi](https://travia-01.web.app).
 
 ## Admin Credentials
 
-- **Admin Email**: samirabrar333@gmail.com
-- **Admin Password**: Nabila@01
-
 ## Features
 
 - **User Dashboard**:
