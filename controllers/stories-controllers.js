@@ -2,10 +2,15 @@ import Story from "../models/stories.js";
 
 export const getAllTheStories = async (req, res) => {
   try {
-    const { count } = req.query;
-    const countInInt = parseInt(count);
-    const stories = await Story.find({}).limit(countInInt);
-    res.status(200).send(stories);
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skip = (page - 1) * limit;
+    const stories = await Story.find({}).skip(skip).limit(limit);
+    const totalStories = await Story.countDocuments();
+    res.status(200).json({
+      stories,
+      hasMore: skip + limit < totalStories,
+    });
   } catch (error) {
     console.error(error);
   }
